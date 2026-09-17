@@ -60,6 +60,18 @@ Fonte -> Bronze -> Silver -> Gold -> Consumidores
 
 Cada etapa deve terminar com sucesso antes da seguinte começar. Em uma evolucao do projeto, essa dependência pode ser orquestrada por um scheduler, com logs, retries e alertas.
 
+## Operacao observada
+
+As capturas abaixo mostram a arquitetura em execucao: deployments organizados por camada, agendamento recorrente e historico de runs concluídas.
+
+### Deployments por camada
+
+![Deployments das camadas Bronze e Silver](assets/deployments.png)
+
+### Runs do pipeline
+
+![Execucoes recentes do pipeline](assets/runs.png)
+
 ## Decisoes de engenharia
 
 | Decisao | Motivo |

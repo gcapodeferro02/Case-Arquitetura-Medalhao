@@ -9,3 +9,4 @@ __pycache__/
 *.json
 keys/
 credentials.json
+desktop.ini
