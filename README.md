@@ -8,13 +8,7 @@ O ponto de partida era um conjunto de rotinas de extracao, tratamento e disponib
 
 ## Arquitetura
 
-```mermaid
-flowchart LR
-    A[Fontes operacionais] --> B[Bronze\nraw e historico]
-    B --> C[Silver\nqualidade e regras]
-    C --> D[Gold\nconsumo e servicos]
-    D --> E[BI\nautomacoes e APIs]
-```
+![Fluxo de atualização e arquitetura do pipeline](assets/fluxo-atualizacao-real.png)
 
 ## Como a estrutura foi criada
 
