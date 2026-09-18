@@ -1,16 +1,38 @@
-# Case: construcao de uma arquitetura medalhao com Python
+# Case: construção de uma arquitetura medalhão com Python
 
-Este repositorio documenta a construcao de um pipeline de dados em camadas Bronze, Silver e Gold. O objetivo do case e mostrar as decisoes de engenharia, o fluxo de processamento e os cuidados necessarios para transformar dados operacionais em dados confiaveis para analise.
+> Documentação pública e sanitizada de uma arquitetura de dados em camadas
+> Bronze, Silver e Gold, criada para separar ingestão, tratamento e consumo.
 
-## Contexto
+> [!WARNING]
+> O repositório não contém credenciais, dados reais, arquivos `.env`, caminhos
+> locais ou configurações de infraestrutura. A documentação descreve decisões
+> técnicas sem reproduzir informações corporativas sensíveis.
 
-O ponto de partida era um conjunto de rotinas de extracao, tratamento e disponibilizacao executadas no mesmo projeto. A organizacao em camadas foi adotada para separar responsabilidades, facilitar a manutencao e permitir que cada etapa fosse validada de forma independente.
+## Contexto e problema
 
-## Arquitetura
+O ponto de partida era um conjunto de rotinas de extração, tratamento e
+disponibilização executadas no mesmo projeto. Quando essas responsabilidades
+ficam misturadas, mudanças em uma etapa aumentam o risco de afetar as demais e
+torna-se mais difícil reprocessar ou validar uma carga.
+
+A arquitetura medalhão foi adotada para separar responsabilidades, facilitar a
+manutenção e permitir que cada etapa seja validada de forma independente.
+
+## Minha atuação
+
+Atuei na estruturação e documentação das frentes representadas no projeto:
+
+- organização do fluxo de extração e carga inicial;
+- definição das responsabilidades das camadas Bronze, Silver e Gold;
+- aplicação de regras de limpeza, tipagem e validação;
+- organização da persistência e do reprocessamento;
+- documentação do fluxo, decisões e próximos passos.
+
+## Arquitetura atual
 
 ![Fluxo de atualização e arquitetura do pipeline](assets/fluxo-atualizacao-real.png)
 
-## Como a estrutura foi criada
+## Como a estrutura atual funciona
 
 ### 1. Bronze: preservar a origem
 
@@ -46,17 +68,20 @@ Responsabilidades:
 - aplicar filtros e agregacoes de uso recorrente;
 - monitorar a execução do fluxo.
 
-## Ordem de processamento
+## Ordem de processamento atual
 
 ```text
 Fonte -> Bronze -> Silver -> Gold -> Consumidores
 ```
 
-Cada etapa deve terminar com sucesso antes da seguinte começar. Em uma evolucao do projeto, essa dependência pode ser orquestrada por um scheduler, com logs, retries e alertas.
+Cada etapa deve terminar com sucesso antes da seguinte começar. O fluxo atual
+documenta essa dependência; mecanismos adicionais de orquestração são tratados
+como evolução quando ainda não fazem parte da implementação publicada.
 
-## Operacao observada
+## Operação observada
 
-As capturas abaixo mostram a arquitetura em execucao: deployments organizados por camada, agendamento recorrente e historico de runs concluídas.
+As capturas abaixo mostram a operação documentada: deployments organizados por
+camada e histórico de runs concluídas.
 
 ### Deployments por camada
 
@@ -66,7 +91,7 @@ As capturas abaixo mostram a arquitetura em execucao: deployments organizados po
 
 ![Execucoes recentes do pipeline](assets/runs.png)
 
-## Decisoes de engenharia
+## Decisões de engenharia
 
 | Decisao | Motivo |
 | --- | --- |
@@ -75,6 +100,10 @@ As capturas abaixo mostram a arquitetura em execucao: deployments organizados po
 | Preservar a Bronze | Permite auditoria e reprocessamento |
 | Centralizar transformacoes na Silver | Evita regras duplicadas nos consumidores |
 | Entregar dados orientados ao consumo na Gold | Simplifica BI, APIs e automacoes |
+
+As decisões acima representam princípios documentados no projeto. Scheduler,
+retries, alertas, contratos versionados e CI/CD só devem ser considerados
+capacidades atuais quando estiverem implementados e verificáveis no repositório.
 
 ## Seguranca e reproducibilidade
 
@@ -89,14 +118,17 @@ SOURCE_USER=seu-usuario
 SOURCE_SECRET_REF=use-um-gerenciador-de-segredos
 ```
 
-## Resultado
+## Impacto / resultado
 
-A arquitetura cria uma fronteira clara entre ingestao, qualidade e consumo. Isso torna o fluxo mais observavel, reduz o risco de alterar a origem ao criar uma nova regra e oferece uma base para evoluir de scripts locais para uma orquestracao produtiva.
+A arquitetura cria uma fronteira clara entre ingestão, qualidade e consumo.
+Isso facilita localizar responsabilidades, validar cada etapa e evoluir o fluxo
+sem misturar regras de origem com regras de consumo.
 
-## Proximos passos
+## Evoluções planejadas
 
 - adicionar testes de qualidade por camada;
 - versionar contratos de dados;
 - incluir logs estruturados e metricas;
-- automatizar a execução com CI/CD;
+- automatizar a execução com scheduler e CI/CD;
+- adicionar retries e alertas para falhas;
 - substituir arquivos intermediarios por tabelas gerenciadas quando necessário.
