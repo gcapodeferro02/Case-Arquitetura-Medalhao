@@ -1,5 +1,6 @@
 # Case: construção de uma arquitetura medalhão com Python
 
+> **Nó Pai:** [[05_PROJETOS/ARQUITETURA_MEDALHAO/HUB_ARQUITETURA|Voltar ao HUB Arquitetura]] | [[00_INDICE_MESTRE|Índice Mestre]]  
 > Documentação pública e sanitizada de uma arquitetura de dados em camadas
 > Bronze, Silver e Gold, criada para separar ingestão, tratamento e consumo.
 
